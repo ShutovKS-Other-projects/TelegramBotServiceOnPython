@@ -1,8 +1,8 @@
-# Bot config
-API_TOKEN = 'API_TOKEN'
+import os
+from dotenv import load_dotenv
 
-# Admin config
-ADMIN_ID = 0
+load_dotenv()
 
-# Chat config
-CHAT_ID = 0
+BOT_API_TOKEN = os.getenv('BOT_API_TOKEN')
+ADMIN_ID = int(os.getenv('ADMIN_ID'))
+CHAT_ID = int(os.getenv('CHAT_ID'))

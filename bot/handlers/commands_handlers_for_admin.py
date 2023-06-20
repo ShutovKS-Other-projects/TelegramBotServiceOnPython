@@ -20,7 +20,7 @@ class CommandsHandlersForAdmin:
         if message.from_user.id == ADMIN_ID:
             await message.reply('Список команд:\n'
                                 '/setNotify (True/False) - включить/выключить уведомления\n'
-                                '/notifyChat (Текс сообщения) - отправить сообщение во все чаты')
+                                '/notifyChat (Текс) - отправить сообщение в главный чат')
 
     async def set_permission_to_notify_users(self, message: types.Message):
         print('set_permission_to_notify_users')
@@ -34,5 +34,5 @@ class CommandsHandlersForAdmin:
 
     async def send_chat_message(self, message: types.Message):
         text = message.text.replace('/notifyChat', '')
-        await self.__bot.send_message(chat_id=message.chat.id, text=text)
-        # await self.__bot.send_message(chat_id=CHAT_ID, text=text)
+        # await self.__bot.send_message(chat_id=message.chat.id, text=text)
+        await self.__bot.send_message(chat_id=CHAT_ID, text=text)

@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher, types
 from bot.config import ADMIN_ID
 from bot.additions.chat_setting import ChatSetting
+from bot.additions.members import members_in_chat
 from typing import List
 from aiogram.types import ChatMemberOwner, ChatMemberAdministrator
 
@@ -12,7 +13,8 @@ class MessageHandlersCommands:
         self.__bot = bot
 
     async def send_welcome(self, message: types.Message):
-        await message.reply("/pingAll - уведомить всех участников\n"
+        await message.reply("Список команд:\n"
+                            "/pingAll - уведомить всех участников\n"
                             "/pingAdmins - уведомить всех администраторов\n")
 
     async def send_participant_notifications(self, message: types.Message):
