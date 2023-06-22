@@ -26,6 +26,7 @@ if __name__ == '__main__':
     dp.register_message_handler(commands_handlers.send_info, commands=['info'])
     dp.register_message_handler(commands_handlers.send_welcome, commands=['start', 'help'])
     dp.register_message_handler(commands_handlers.send_request_in_openai, commands=['request'])
+    dp.register_message_handler(commands_handlers.send_generate_image, commands=['generate_image'])
     dp.register_message_handler(commands_handlers.send_participant_notifications, commands=['pingAll'])
     dp.register_message_handler(commands_handlers.send_administration_notifications, commands=['pingAdmins'])
 

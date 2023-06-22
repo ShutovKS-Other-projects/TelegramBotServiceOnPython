@@ -1,4 +1,5 @@
-from typing import List
+import base64
+
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import ChatMemberOwner, ChatMemberAdministrator
 
@@ -20,7 +21,8 @@ class MessageHandlersCommands:
         await message.reply("Список команд:\n"
                             "/pingAll - уведомить всех участников\n"
                             "/pingAdmins - уведомить всех администраторов\n"
-                            "/request (Текст) - запросить информацию у OpenAI")
+                            "/request (Текст) - запросить информацию у OpenAI"
+                            "/generate_image (Текст) - сгенерировать изображение по тексту\n")
 
     async def send_participant_notifications(self, message: types.Message):
         if self.__chat_setting.is_notifications or message.from_user.id == ADMIN_ID:
@@ -98,5 +100,20 @@ class MessageHandlersCommands:
                 messages.append(message_from_user(text_temp))
 
         messages.reverse()
-        reply = self.__openai_request.request(messages)
-        await message.reply(reply)
+        response = self.__openai_request.request_text(messages)
+        await message.reply(response)
+
+    async def send_generate_image(self, message: types.Message):
+        if message.text.replace('/generate_image', '').strip() == '':
+            await message.reply('Запрос не может быть пустым')
+            return
+
+        prompt = message.text.replace('/generate_image', '').strip()
+        image = self.__openai_request.request_image(prompt)
+        if image is None:
+            await message.reply('Не удалось сгенерировать изображение')
+            return
+
+        image_bytes = bytes(image, 'utf-8')
+        image_decoded = base64.decodebytes(image_bytes)
+        await message.reply_photo(image_decoded)
