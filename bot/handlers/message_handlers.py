@@ -9,5 +9,4 @@ class MessageHandlers:
         self.__bot = bot
 
     async def echo(self, message: types.Message):
-        if self.__chat_setting.is_notifications:
-            await message.reply(message.text)
+        pass

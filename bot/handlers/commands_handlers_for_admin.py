@@ -9,13 +9,6 @@ class CommandsHandlersForAdmin:
         self.__chat_setting = chat_setting
         self.__bot = bot
 
-    async def echo(self, message: types.Message):
-        if message.from_user.id == ADMIN_ID:
-            if message.text.find('/setNotify') != -1:
-                await self.set_permission_to_notify_users(message)
-            elif message.text.find('/notifyChat') != -1:
-                await self.send_chat_message(message)
-
     async def send_help(self, message: types.Message):
         if message.from_user.id == ADMIN_ID:
             await message.reply('Список команд:\n'
