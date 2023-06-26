@@ -38,12 +38,10 @@ class UserTable:
         :type phone_number: str
         :type vk_link: str
         """
-        if self.is_user(user_id):
-            return
-
+        if self.is_user(user_id): return
         cur = self.conn.cursor()
-        cur.execute(
-            f"INSERT INTO {self.table_name} VALUES ({user_id}, '{user_name}', '{email}', '{phone_number}', '{vk_link}')")
+        cur.execute(f"INSERT INTO {self.table_name} "
+                    f"VALUES ({user_id}, '{user_name}', '{email}', '{phone_number}', '{vk_link}')")
         self.conn.commit()
         cur.close()
 
@@ -53,17 +51,20 @@ class UserTable:
         :rtype: bool
         """
         cur = self.conn.cursor()
-        cur.execute(f"SELECT user_id FROM {self.table_name} WHERE {self.user_id} = {user_id}")
-        user = cur.fetchone()
+        cur.execute(f"SELECT EXISTS (SELECT 1 FROM {self.table_name} "
+                    f"WHERE {self.user_id} = {user_id})")
+        result = cur.fetchone()[0]
         cur.close()
-        return user is not None
+        return result
 
     def delete_user(self, user_id):
         """
         :type user_id: int
         """
+        if self.is_user(user_id) is False: return
         cur = self.conn.cursor()
-        cur.execute(f"DELETE FROM {self.table_name} WHERE {self.user_id} = {user_id}")
+        cur.execute(f"DELETE FROM {self.table_name} "
+                    f"WHERE {self.user_id} = {user_id}")
         self.conn.commit()
         cur.close()
 
@@ -88,6 +89,7 @@ class UserTable:
         :type user_id: int
         :rtype: str
         """
+        if self.is_user(user_id) is False: return
         cur = self.conn.cursor()
         cur.execute(f"SELECT user_name FROM {self.table_name} WHERE {self.user_id} = {user_id}")
         user_name = cur.fetchone()
@@ -99,6 +101,7 @@ class UserTable:
         :type user_id: int
         :rtype: str
         """
+        if self.is_user(user_id) is False: return
         cur = self.conn.cursor()
         cur.execute(f"SELECT email FROM {self.table_name} WHERE {self.user_id} = {user_id}")
         email = cur.fetchone()
@@ -110,6 +113,7 @@ class UserTable:
         :type user_id: int
         :rtype: str
         """
+        if self.is_user(user_id) is False: return
         cur = self.conn.cursor()
         cur.execute(f"SELECT phone_number FROM {self.table_name} WHERE {self.user_id} = {user_id}")
         phone_number = cur.fetchone()
@@ -121,6 +125,7 @@ class UserTable:
         :type user_id: int
         :rtype: str
         """
+        if self.is_user(user_id) is False: return
         cur = self.conn.cursor()
         cur.execute(f"SELECT vk_link FROM {self.table_name} WHERE {self.user_id} = {user_id}")
         vk_link = cur.fetchone()
@@ -132,6 +137,7 @@ class UserTable:
         :type user_id: int
         :rtype: dict
         """
+        if self.is_user(user_id) is False: return
         cur = self.conn.cursor()
         cur.execute(f"SELECT * FROM {self.table_name} WHERE {self.user_id} = {user_id}")
         user_info = cur.fetchone()

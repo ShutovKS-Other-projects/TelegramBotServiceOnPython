@@ -9,8 +9,14 @@ dp = Dispatcher(bot)
 
 
 @dp.message_handler(content_types=types.ContentTypes.TEXT)
-async def echo(message: types.Message):
-    await main_handler.handler_text(message)
+async def handler_text(message: types.Message):
+    await main_handler.handler_text_commands(message)
+    await main_handler.handler_any(message)
+
+
+@dp.message_handler(content_types=types.ContentTypes.ANY)
+async def handler_any(message: types.Message):
+    await main_handler.handler_any(message)
 
 
 if __name__ == '__main__':

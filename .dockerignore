@@ -1,7 +1,8 @@
-.env.example
 #.env
 .idea
 .git
 .gitignore
+venv
+.env.example
 LICENSE.md
 README.md

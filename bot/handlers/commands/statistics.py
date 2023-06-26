@@ -5,7 +5,7 @@ from bot.data_base.db import StatisticsTable
 
 async def help(message: types.Message):
     await message.reply("Список команд:\n"
-                        "/help - это сообщение\n"
+                        "/helpStat - это сообщение\n"
                         "/stat - статистика о вас\n"
                         "/stat (id) - статистика пользователя\n"
                         "/statAll - статистика всех\n")
@@ -21,9 +21,9 @@ async def get_stat_by_id(message: types.Message):
             await message.reply('Статистика о пользователе отсутствует')
         else:
             await message.reply(f'Статистика о пользователе:\n'
-                                f'Сообщений: {stat[1]}\n'
-                                f'Картинок: {stat[2]}\n'
-                                f'Стикеров: {stat[3]}')
+                                f'Сообщений: {stat[2]}\n'
+                                f'Картинок: {stat[3]}\n'
+                                f'Стикеров: {stat[4]}')
 
 
 async def get_stat(message: types.Message):
@@ -32,9 +32,9 @@ async def get_stat(message: types.Message):
         await message.reply('Статистика о вас отсутствует')
     else:
         await message.reply(f'Статистика о вас:\n'
-                            f'Сообщений: {stat[1]}\n'
-                            f'Картинок: {stat[2]}\n'
-                            f'Стикеров: {stat[3]}')
+                            f'Сообщений: {stat[2]}\n'
+                            f'Картинок: {stat[3]}\n'
+                            f'Стикеров: {stat[4]}')
 
 
 async def get_stat_all(message: types.Message):
@@ -43,8 +43,14 @@ async def get_stat_all(message: types.Message):
     if stats is None or stats == []:
         await message.reply('Статистика отсутствует')
     else:
-        text = 'Пользователь | Сообщений | Картинок | Стикеров\n'
+        text = '@ - messages | images | stickers\n'
         for stat in stats:
-            text += f'{stat[0]} | {stat[1]} | {stat[2]} | {stat[3]}\n'
+            user = stat[1]
+            try:
+                user = (await message.bot.get_chat(user)).username
+            except:
+                user = 'id: ' + str(user)
+
+            text += f'{user} - {stat[2]} - {stat[3]} - {stat[4]}\n'
 
         await message.reply(text)

@@ -28,6 +28,7 @@ command_handlers = {
     f'{sc}deleteUser': [commands_for_admin.delete_user_in_user_table],
 
     # statistics
+    f'{sc}helpStat': [statistics.help],
     f'{sc}stat': [statistics.get_stat],
     f'{sc}stat (id)': [statistics.get_stat_by_id],
     f'{sc}statAll': [statistics.get_stat_all], }

@@ -1,7 +1,7 @@
 import psycopg2
 
-from bot.data_base.requests.statistics_table import StatisticsTable
 from bot.data_base.requests.user_table import UserTable
+from bot.data_base.requests.statistics_table import StatisticsTable
 from bot import config
 
 try:

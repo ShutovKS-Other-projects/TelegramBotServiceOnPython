@@ -37,8 +37,8 @@ async def send_chat_message(message: types.Message):
 
 async def add_user_in_user_table(message: types.Message):
     if check_for_administrator_access(message) is False: return
-    UserTable.add_user(message.from_user.id)
-    StatisticsTable.add_stat(message.from_user.id)
+
+
 
 
 async def delete_user_in_user_table(message: types.Message):
