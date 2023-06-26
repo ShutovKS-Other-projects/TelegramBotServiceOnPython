@@ -2,10 +2,8 @@ from aiogram import types
 from aiogram.types import ChatMemberOwner, ChatMemberAdministrator
 
 import bot.additions.chat_setting as chat_setting
-import bot.additions.members as members
-import bot.config as config
-
-ADMIN_ID = config.ADMIN_ID
+from bot.config import ADMIN_ID
+from bot.data_base.db import UserTable
 
 
 async def help(message: types.Message):
@@ -19,8 +17,13 @@ async def participant_notifications(message: types.Message):
     if chat_setting.is_notifications or message.from_user.id == ADMIN_ID:
         text = ''
 
-        members_list = members.members_in_chat.copy()
-        members_list.remove(message.from_user.id)
+        members_list = UserTable.get_all_user_id()
+        if message.from_user.id in members_list:
+            members_list.remove(message.from_user.id)
+
+        if len(members_list) == 0:
+            await message.reply('Участников нет')
+            return
 
         for id_user in members_list:
             try:
@@ -29,11 +32,8 @@ async def participant_notifications(message: types.Message):
             except:
                 print(f'Пользователь {id_user} не найден в чате {message.chat.title}')
 
-        if text == '':
-            text = 'Участники из списка не найдены'
-        else:
-            text = f'Пользователь @{message.from_user.username} запросил уведомление всех участников\n' \
-                   'Участники:\n' + text
+        text = f'Пользователь @{message.from_user.username} запросил созвать всех\n' \
+               'Участники:\n' + text
 
         await message.reply(text)
 

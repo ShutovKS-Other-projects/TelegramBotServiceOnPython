@@ -2,11 +2,11 @@ import re
 
 from aiogram import types
 
-import bot.config as config
-import bot.handlers.commands_dictionary as commands_dictionary
+import bot.handlers.commands.commands_dictionary as commands_dictionary
+from bot.config import CHAT_ID, ADMIN_ID
 
 
-async def echo_handler_text(message: types.Message):
+async def handler_text(message: types.Message):
     if check_where_the_message_is_from(message) is False: return
 
     command = message.text.split()[0]
@@ -18,10 +18,10 @@ async def echo_handler_text(message: types.Message):
 
     if command in commands_dictionary.command_handlers:
         handlers = commands_dictionary.command_handlers[command]
-    for handler in handlers:
-        await handler(message)
+        for handler in handlers:
+            await handler(message)
 
 
 def check_where_the_message_is_from(message: types.Message):
-    return message.chat.id == config.CHAT_ID \
-        or message.from_user.id == config.ADMIN_ID
+    return message.chat.id == CHAT_ID \
+        or message.from_user.id == ADMIN_ID

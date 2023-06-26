@@ -6,10 +6,11 @@ import bot.additions.chat_setting as chat_setting
 async def help(message: types.Message):
     await message.reply("Список команд:\n"
                         "/help - это сообщение\n"
-                        # "/helpAdmin - команды для администраторов\n"
-                        "/helpCommands - команды для участников\n"
-                        "/helpOpenai - команды для работы с OpenAI\n"
                         "/helpAll - все команды\n"
+                        "/helpCommands - команды для участников\n"
+                        "/helpAdmin - команды для администраторов\n"
+                        "/helpOpenai - команды для работы с OpenAI\n"
+                        "/helpStatistics - команды для работы со статистикой\n"
                         "/info - информация о боте\n")
 
 

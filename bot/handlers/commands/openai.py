@@ -2,10 +2,10 @@ import base64
 
 from aiogram import Bot, types
 
-import bot.additions.openai_request as openai_request
-import bot.config as config
+import bot.units.openai_request as openai_request
+from bot.config import BOT_API_TOKEN
 
-bot = Bot(token=config.BOT_API_TOKEN)
+bot = Bot(token=BOT_API_TOKEN)
 
 
 async def help(message: types.Message):

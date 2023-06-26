@@ -1,1 +1,1 @@
-is_notifications = False
+is_notifications = True
